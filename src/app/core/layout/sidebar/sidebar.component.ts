@@ -36,13 +36,14 @@ export class SidebarComponent {
     return this.authService.getUserRole() === item.role;
   }
 
-  onNavItemClick(item: NavItem) {
+  
+   onNavItemClick(item: NavItem) {
     if (item.label === 'Logout' || item.route === '/auth/login') {
       const confirmed = window.confirm('Are you sure you want to logout?');
       if (!confirmed) return; // user clicked cancel
 
-      this.authService.logout();        // your logout logic
-      this.router.navigate([item.route]); // navigate to login
+      this.authService.logout(); // calls your logout logic
+      // No need to navigate manually since logout() already redirects
     } else {
       this.router.navigate([item.route]);
     }
