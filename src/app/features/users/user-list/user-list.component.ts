@@ -1,20 +1,11 @@
 import { Component } from '@angular/core';
 import { ColumnConfig } from 'src/app/shared/components/data-table/data-table.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
-  template: `
-    <div class="flex justify-between items-center mb-4">
-      <div>
-        <h1>User Management</h1>
-        <p>Manage back-office users and their access levels.</p>
-      </div>
-      <button class="btn btn-primary">Add New User</button>
-    </div>
-    <div class="card">
-      <app-data-table [columns]="columns" [data]="users"></app-data-table>
-    </div>
-  `
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent {
   columns: ColumnConfig[] = [
@@ -30,4 +21,35 @@ export class UserListComponent {
     { id: 2, name: 'Sarah Miller', email: 'sarah@company.com', role: 'MANAGER', lastLogin: new Date() },
     { id: 3, name: 'James Wilson', email: 'james@company.com', role: 'USER', lastLogin: new Date() },
   ];
+
+  showForm = false;
+  userForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.userForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      role: ['USER', Validators.required],
+    });
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  addUser() {
+    if (this.userForm.invalid) return;
+
+    const newUser = {
+      id: this.users.length + 1,
+      name: this.userForm.value.name,
+      email: this.userForm.value.email,
+      role: this.userForm.value.role,
+      lastLogin: new Date(),
+    };
+
+    this.users.push(newUser);
+    this.userForm.reset({ role: 'USER' });
+    this.showForm = false;
+  }
 }
