@@ -14,11 +14,7 @@ export class NavbarComponent {
 
   onLogout() {
     const confirmLogout = confirm("Are you sure you want to logout?");
-    if (confirmLogout) {
-      this.authService.logout();
-    }else {
-      // Do nothing if the user cancels the logout
-      return;
-    }
+    if (confirmLogout) this.authService.logout();
+    return;
   }
 }
