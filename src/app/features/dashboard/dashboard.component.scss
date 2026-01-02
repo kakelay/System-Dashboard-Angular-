@@ -55,3 +55,55 @@
   p { font-size: 0.875rem; font-weight: 600; }
   small { font-size: 0.75rem; opacity: 0.8; }
 }
+
+
+
+/* =======================
+   DARK MODE (Angular-safe)
+======================= */
+:host-context(body.dark-mode) {
+
+  .stat-card {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+
+    .stat-label {
+      color: #94a3b8;
+    }
+
+    .stat-value {
+      color: #f8fafc;
+    }
+
+    .stat-icon {
+      &.blue   { background: #1e40af33; color: #60a5fa; }
+      &.green  { background: #16653433; color: #4ade80; }
+      &.purple { background: #6b21a833; color: #c084fc; }
+      &.orange { background: #9a341233; color: #fb923c; }
+    }
+  }
+
+  .simple-table {
+    th {
+      color: #94a3b8;
+      border-bottom-color: #334155;
+    }
+    td {
+      color: #f1f5f9;
+      border-bottom-color: #334155;
+    }
+  }
+
+  .alert-item {
+    &.warning {
+      background: #92400e33;
+      color: #fde68a;
+    }
+
+    &.success {
+      background: #16653433;
+      color: #bbf7d0;
+    }
+  }
+}
