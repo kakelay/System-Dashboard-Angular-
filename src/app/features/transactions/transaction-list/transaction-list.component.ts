@@ -3,23 +3,8 @@ import { ColumnConfig } from 'src/app/shared/components/data-table/data-table.co
 
 @Component({
   selector: 'app-transaction-list',
-  template: `
-    <h1>Financial Transactions</h1>
-    <div class="card mt-4">
-       <div class="flex justify-between mb-4">
-         <div class="flex gap-2">
-            <select class="form-select"><option>All Status</option><option>Success</option><option>Failed</option></select>
-            <input type="date" class="form-input">
-         </div>
-         <button class="btn btn-outline">Export CSV</button>
-       </div>
-       <app-data-table [columns]="columns" [data]="transactions"></app-data-table>
-    </div>
-  `,
-  styles: [`
-    .gap-2 { gap: 0.5rem; }
-    .form-select, .form-input { padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem; }
-  `]
+  templateUrl: './transaction-list.component.html',
+  styleUrls: ['./transaction-list.component.scss']
 })
 export class TransactionListComponent {
   columns: ColumnConfig[] = [

@@ -3,12 +3,9 @@ import { ColumnConfig } from 'src/app/shared/components/data-table/data-table.co
 
 @Component({
   selector: 'app-customer-list',
-  template: `
-    <h1>Customer Management</h1>
-    <div class="card mt-4">
-       <app-data-table [columns]="columns" [data]="customers"></app-data-table>
-    </div>
-  `
+  templateUrl: './customer-list.component.html',
+  styleUrls: ['./customer-list.component.scss'],
+  
 })
 export class CustomerListComponent {
   columns: ColumnConfig[] = [

@@ -3,13 +3,8 @@ import { ColumnConfig } from 'src/app/shared/components/data-table/data-table.co
 
 @Component({
   selector: 'app-audit-log',
-  template: `
-    <h1>System Audit Log</h1>
-    <p class="mb-4">Track all security-sensitive actions performed in the back-office.</p>
-    <div class="card">
-      <app-data-table [columns]="columns" [data]="logs"></app-data-table>
-    </div>
-  `
+  templateUrl: './audit-log.component.html',
+  styleUrls: ['./audit-log.component.scss']
 })
 export class AuditLogComponent {
   columns: ColumnConfig[] = [

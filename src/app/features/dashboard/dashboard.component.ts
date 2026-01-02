@@ -17,5 +17,6 @@ export class DashboardComponent {
     { id: 'TX-1001', customer: 'John Doe', amount: 150.00, status: 'Success', date: new Date() },
     { id: 'TX-1002', customer: 'Jane Smith', amount: 85.50, status: 'Pending', date: new Date() },
     { id: 'TX-1003', customer: 'Robert Brown', amount: 210.00, status: 'Failed', date: new Date() },
+    { id: 'TX-1004', customer: 'Emily Davis', amount: 95.75, status: 'Success', date: new Date() },
   ];
 }

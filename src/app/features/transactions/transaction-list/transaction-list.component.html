@@ -1,5 +1,6 @@
 <h1>Financial Transactions</h1>
-<div class="card mt-4" tyle="card">
+
+<div class="card mt-4">
   <div class="flex justify-between mb-4">
     <div class="flex gap-2">
       <select class="form-select">
@@ -9,8 +10,12 @@
       </select>
       <input type="date" class="form-input" />
     </div>
+
     <button class="btn btn-outline">Export CSV</button>
   </div>
 
-  <app-data-table [columns]="columns" [data]="transactions"></app-data-table>
+  <app-data-table
+    [columns]="columns"
+    [data]="transactions">
+  </app-data-table>
 </div>
