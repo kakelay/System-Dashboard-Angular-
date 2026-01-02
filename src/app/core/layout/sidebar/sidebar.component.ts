@@ -16,6 +16,7 @@ interface NavItem {
 })
 export class SidebarComponent {
   @Input() isCollapsed = false;
+  @Input() isDarkMode = false;
 
   navItems: NavItem[] = [
     { label: "Dashboard", icon: "dashboard", route: "/dashboard" },
@@ -45,6 +46,23 @@ export class SidebarComponent {
       // No need to navigate manually since logout() already redirects
     } else {
       this.router.navigate([item.route]);
+    }
+  }
+
+  onLogout() {
+    const confirmLogout = confirm("Are you sure you want to logout?");
+    if (confirmLogout) this.authService.logout();
+  }
+ 
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+
+    // Add or remove the class on the <body>
+    if (this.isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
     }
   }
 }

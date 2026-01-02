@@ -1,149 +1,249 @@
-/* =======================
-   SIDEBAR (LIGHT MODE)
-======================= */
 .sidebar {
   width: 260px;
-  background: #f8fafc;
-  color: #1e293b;
   height: 100vh;
   position: fixed;
-  left: 0;
-  top: 0;
+  inset: 0 auto 0 0;
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  // background: linear-gradient(180deg, #0f172a, #020617);
+  background: linear-gradient(180deg, #ffffff, #ebecf3);
+  // color: #f8fafc;
+  transition: width 0.25s ease;
   z-index: 100;
 
   &.collapsed {
     width: 80px;
 
-    .sidebar-header .logo-text,
+    .logo-text,
+    .sidebar-search,
     .sidebar-footer {
       display: none;
     }
 
     .nav-link {
       justify-content: center;
-      padding: 1rem 0;
+      padding: 0.9rem 0;
     }
   }
 }
 
-/* =======================
-   HEADER
-======================= */
+/* Header */
 .sidebar-header {
   height: 64px;
   display: flex;
   align-items: center;
   padding: 0 1.25rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
   .logo {
     display: flex;
     align-items: center;
     gap: 0.75rem;
 
-    img {
+    .logo-image {
+      width: 32px;
+      height: 32px;
       border-radius: 0.5rem;
     }
 
     .logo-text {
       font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
+      font-size: 1.05rem;
+      letter-spacing: 0.4px;
     }
   }
 }
 
-/* =======================
-   NAV
-======================= */
-.sidebar-nav {
-  flex: 1;
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  background-color: #47556910; /* Light background for nav area */
-}
-
-.nav-link {
+/* Search */
+.sidebar-search {
+  margin: 1rem;
   display: flex;
   align-items: center;
-  padding: 0.75rem 1.5rem;
-  color: #475569;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  gap: 1rem;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
 
-  &:hover {
-    background: #e2e8f0;
-    color: #1e293b;
-  }
-
-  &.active {
-    background: #2563eb;
-    color: #ffffff;
-    border-right: 4px solid #1d4ed8;
+  input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #f8fafc;
+    font-size: 0.8rem;
+    width: 100%;
   }
 
   .material-icons {
-    font-size: 1.25rem;
-  }
-
-  .link-text {
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 1rem;
+    color: #94a3b8;
   }
 }
 
-/* =======================
-   FOOTER
-======================= */
-.sidebar-footer {
-  padding: 1.5rem;
-  border-top: 1px solid #e2e8f0;
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-.logo-image {
-  width: 32px;
-  height: 32px;
-  object-fit: cover;
-}
-
-/* =======================
-   DARK MODE
-======================= */
-:host-context(body.dark-mode) {
-  .sidebar {
-    background: #1c1e28;
-    color: #f8fafc;
-  }
-
-  .sidebar-header {
-    border-bottom: 1px solid #1e293b;
-  }
+/* Navigation */
+.sidebar-nav {
+  flex: 1;
+  padding: 0.5rem 0;
 
   .nav-link {
-    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    // color: #94a3b8;
+    font-size: 0.875rem;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s ease;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: #ffffff;
+      background: linear-gradient(
+        90deg,
+        rgba(129, 143, 173, 0.25),
+        transparent
+      );
+      color: black;
     }
 
     &.active {
-      background: #2563eb;
-      color: #ffffff;
-      border-right: 4px solid #ffffff;
+      color: black;
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.25), transparent);
+    }
+
+    .nav-icon {
+      font-size: 1.25rem;
+    }
+
+    .active-indicator {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 4px;
+      height: 60%;
+      background: #3b82f6;
+      transform: translateY(-50%);
+      border-radius: 2px;
+      opacity: 0;
+    }
+
+    &.active .active-indicator {
+      opacity: 1;
+    }
+  }
+}
+
+/* Footer */
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .user-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #f1f5f9;
+      }
+
+      .user-role {
+        font-size: 0.85rem;
+        color: #94a3b8;
+      }
     }
   }
 
-  .sidebar-footer {
-    border-top: 1px solid #1e293b;
-    color: #64748b;
+  .footer-actions {
+    margin-bottom: 0.5rem;
+
+    .footer-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-weight: 500;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+}
+
+/* Dark Mode */
+:host-context(body.dark-mode) {
+  .sidebar.dark-mode {
+    background: #1c1e28;
+    color: #f8fafc;
+
+    .sidebar-header {
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .nav-link {
+      color: #94a3b8;
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+      }
+      &.active {
+        color: #ffffff;
+        border-right: 4px solid #ffffff;
+      }
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid #1e293b;
+      color: #64748b;
+    }
+  }
+
+  .sidebar {
+    background: #1c1e28;
+    color: #f8fafc;
+
+    .sidebar-header {
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .nav-link {
+      color: #94a3b8;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+      }
+
+      &.active {
+        color: #ffffff;
+      }
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid #1e293b;
+      color: #64748b;
+    }
   }
 }
