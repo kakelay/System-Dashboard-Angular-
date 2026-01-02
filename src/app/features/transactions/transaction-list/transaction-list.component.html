@@ -1,0 +1,16 @@
+<h1>Financial Transactions</h1>
+<div class="card mt-4" tyle="card">
+  <div class="flex justify-between mb-4">
+    <div class="flex gap-2">
+      <select class="form-select">
+        <option>All Status</option>
+        <option>Success</option>
+        <option>Failed</option>
+      </select>
+      <input type="date" class="form-input" />
+    </div>
+    <button class="btn btn-outline">Export CSV</button>
+  </div>
+
+  <app-data-table [columns]="columns" [data]="transactions"></app-data-table>
+</div>
