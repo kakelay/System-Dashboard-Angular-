@@ -1,0 +1,64 @@
+<div class="dashboard">
+  <div class="page-header mb-4">
+    <h1>System Dashboard</h1>
+    <p>Welcome back! Here's an overview of your platform today.</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-icon" [ngClass]="stat.color">
+        <span class="material-icons">{{ stat.icon }}</span>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">{{ stat.label }}</span>
+        <span class="stat-value">{{ stat.value }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2-1 mt-4">
+    <div class="card">
+      <h3>Recent Transactions</h3>
+      <div class="mt-4">
+        <table class="simple-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tx of recentTransactions">
+              <td>{{ tx.id }}</td>
+              <td>{{ tx.customer }}</td>
+              <td>{{ tx.amount | currency }}</td>
+              <td><span [class]="'badge badge-' + tx.status.toLowerCase()">{{ tx.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>System Alerts</h3>
+      <div class="alerts-list mt-4">
+        <div class="alert-item warning">
+          <span class="material-icons">warning</span>
+          <div>
+            <p class="font-bold">Database load high</p>
+            <small>Started 15 mins ago</small>
+          </div>
+        </div>
+        <div class="alert-item success">
+          <span class="material-icons">verified</span>
+          <div>
+            <p class="font-bold">Backup completed</p>
+            <small>Today at 04:00 AM</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

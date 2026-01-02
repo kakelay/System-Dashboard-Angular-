@@ -1,0 +1,38 @@
+<div class="table-container">
+  <div class="loading-overlay" *ngIf="loading">
+    <span>Loading...</span>
+  </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col.label }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of data">
+        <td *ngFor="let col of columns">
+          <ng-container [ngSwitch]="col.type">
+            <span *ngSwitchCase="'badge'" [class]="'badge ' + getBadgeClass(col, row[col.key])">
+              {{ row[col.key] }}
+            </span>
+            <span *ngSwitchCase="'currency'">
+              {{ row[col.key] | currency }}
+            </span>
+            <span *ngSwitchCase="'date'">
+              {{ row[col.key] | date:'shortDate' }}
+            </span>
+            <div *ngSwitchCase="'action'" class="actions">
+              <button class="icon-btn"><span class="material-icons">edit</span></button>
+              <button class="icon-btn text-danger"><span class="material-icons">delete</span></button>
+            </div>
+            <span *ngSwitchDefault>{{ row[col.key] }}</span>
+          </ng-container>
+        </td>
+      </tr>
+      <tr *ngIf="data.length === 0 && !loading">
+        <td [attr.colspan]="columns.length" class="empty-cell">No data found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

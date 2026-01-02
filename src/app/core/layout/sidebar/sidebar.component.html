@@ -1,0 +1,25 @@
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <div class="logo">
+      <img src="https://via.placeholder.com/40x40?text=B" alt="Logo">
+      <span class="logo-text" *ngIf="!isCollapsed">BACK-OFFICE</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ng-container *ngFor="let item of navItems">
+      <a *ngIf="shouldShow(item)"
+         [routerLink]="item.route" 
+         routerLinkActive="active" 
+         class="nav-link"
+         [title]="item.label">
+        <span class="material-icons">{{ item.icon }}</span>
+        <span class="link-text" *ngIf="!isCollapsed">{{ item.label }}</span>
+      </a>
+    </ng-container>
+  </nav>
+
+  <div class="sidebar-footer" *ngIf="!isCollapsed">
+    <p>© 2023 Enterprise UI</p>
+  </div>
+</aside>

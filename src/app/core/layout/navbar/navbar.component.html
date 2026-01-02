@@ -1,0 +1,26 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <button class="toggle-btn" (click)="toggleSidebar.emit()">
+      <span class="material-icons">menu</span>
+    </button>
+    <div class="search-box">
+      <span class="material-icons">search</span>
+      <input type="text" placeholder="Search...">
+    </div>
+  </div>
+  
+  <div class="nav-right" *ngIf="user$ | async as user">
+    <div class="notifications">
+      <span class="material-icons">notifications_none</span>
+    </div>
+    <div class="user-profile">
+      <div class="user-info">
+        <span class="user-name">{{ user.name }}</span>
+        <span class="user-role">{{ user.role }}</span>
+      </div>
+      <button class="logout-btn" (click)="onLogout()">
+        <span class="material-icons">logout</span>
+      </button>
+    </div>
+  </div>
+</nav>
