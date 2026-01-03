@@ -140,7 +140,7 @@
   transition: 0.3s;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 18px;
     height: 18px;
@@ -176,7 +176,6 @@
    DARK MODE
 ======================= */
 :host-context(body.dark-mode) {
-
   /* =======================
      Typography
   ======================= */

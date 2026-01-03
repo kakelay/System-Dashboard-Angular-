@@ -1,0 +1,130 @@
+/* =======================
+   Layout Helpers
+======================= */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+/* =======================
+   DARK MODE
+======================= */
+:host-context(body.dark-mode) {
+  /* Typography */
+  h1,
+  h3 {
+    color: #f8fafc;
+  }
+
+  p,
+  .subtitle,
+  .text-muted,
+  .small {
+    color: #94a3b8;
+  }
+
+  label {
+    color: #e5e7eb;
+  }
+
+  /* Cards & Sections */
+  .settings-card,
+  .card {
+    background-color: #23334c;
+    border: 1px solid #1e293b;
+    color: #e5e7eb;
+  }
+
+  .settings-section {
+    border-bottom-color: #334155;
+  }
+
+  /* Form Inputs */
+  .form-input,
+  .form-select {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+  }
+
+  /* Toggle Rows */
+  .toggle-row {
+    background-color: #1e293b;
+
+    strong {
+      color: #f8fafc;
+    }
+
+    .text-muted {
+      color: #94a3b8;
+    }
+  }
+
+  /* Toggle Switch */
+  .slider {
+    background-color: #334155;
+  }
+
+  .switch input:checked + .slider {
+    background-color: #3b82f6;
+  }
+
+  /* Buttons */
+  .btn-outline {
+    border-color: #334155;
+    color: #e5e7eb;
+
+    &:hover {
+      background-color: #1e293b;
+    }
+  }
+
+  /* Sticky Actions */
+  .settings-actions,
+  .save-btn-container {
+    background-color: #23334c;
+    border-top: 1px solid #334155;
+  }
+
+  /* Data Table Fix */
+  ::ng-deep app-data-table {
+    color: #e5e7eb;
+  }
+
+  ::ng-deep app-data-table table {
+    background: transparent;
+  }
+
+  ::ng-deep app-data-table th {
+    color: #94a3b8;
+    border-bottom: 1px solid #334155;
+  }
+
+  ::ng-deep app-data-table td {
+    color: #e5e7eb;
+    border-bottom: 1px solid #334155;
+  }
+
+  /* Grid Helpers */
+  .grid-3 {
+    gap: 1.5rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+}
