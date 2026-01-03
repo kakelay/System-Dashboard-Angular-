@@ -18,6 +18,9 @@ export class SidebarComponent {
   @Input() isCollapsed = false;
   @Input() isDarkMode = false;
 
+  user$ = this.authService.user$;
+
+
   navItems: NavItem[] = [
     { label: "Dashboard", icon: "dashboard", route: "/dashboard" },
     { label: "Users", icon: "people", route: "/users", role: "ADMIN" },
@@ -53,7 +56,6 @@ export class SidebarComponent {
     const confirmLogout = confirm("Are you sure you want to logout?");
     if (confirmLogout) this.authService.logout();
   }
- 
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
