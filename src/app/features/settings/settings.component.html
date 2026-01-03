@@ -1,30 +1,120 @@
-<div class="header">
-  <h1>Settings</h1>
+<!-- =======================
+     Page Header
+======================= -->
+<div class="page-header">
+  <div>
+    <h1>Settings</h1>
+    <p class="subtitle">
+      Configure application behavior and system preferences
+    </p>
+  </div>
 </div>
 
-<div class="card mt-4">
+<!-- =======================
+     Settings Card
+======================= -->
+<div class="card settings-card">
   <form [formGroup]="settingsForm" (ngSubmit)="save()">
-    <div class="settings-section">
-      <h3>General Configuration</h3>
-      <div class="form-group mt-4">
-        <label>Application Name</label>
-        <input type="text" formControlName="appName" class="form-input" />
+    <!-- =======================
+         General Configuration
+    ======================= -->
+    <section class="settings-section">
+      <div class="section-header">
+        <h3>General Configuration</h3>
+        <p>Basic application information</p>
       </div>
-      <div class="form-group">
-        <label>Support Email</label>
-        <input type="email" formControlName="supportEmail" class="form-input" />
+
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label>Application Name</label>
+          <input
+            type="text"
+            formControlName="appName"
+            class="form-input"
+            placeholder="Back-Office System"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Support Email</label>
+          <input
+            type="email"
+            formControlName="supportEmail"
+            class="form-input"
+            placeholder="support@company.com"
+          />
+        </div>
       </div>
-    </div>
+    </section>
 
-    <div class="settings-section mt-4">
-      <h3>Preferences</h3>
-      <label class="flex items-center gap-2">
-        <input type="checkbox" formControlName="enableNotifications" /> Enable
-        Email Notifications
-      </label>
-    </div>
+    <!-- =======================
+         Preferences
+    ======================= -->
+    <section class="settings-section">
+      <div class="section-header">
+        <h3>Preferences</h3>
+        <p>User experience and notifications</p>
+      </div>
 
-    <div class="mt-4 pt-4 border-top">
+      <div class="toggle-row">
+        <div>
+          <strong>Email Notifications</strong>
+          <p class="text-muted">Receive system alerts and important updates</p>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" formControlName="enableNotifications" />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <strong>Email Notifications</strong>
+          <p class="text-muted">Receive system alerts and important updates</p>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" formControlName="enableNotifications" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <strong>Email Notifications</strong>
+          <p class="text-muted">Receive system alerts and important updates</p>
+        </div>
+
+        <label class="switch">
+          <input type="checkbox" formControlName="enableNotifications" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+     <section class="settings-section">
+      <div class="section-header">
+        <h3>Security</h3>
+        <p>Session and access control</p>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <strong>Auto Logout</strong>
+          <p class="text-muted">
+            Automatically logout inactive users
+          </p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" formControlName="autoLogout" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- =======================
+         Actions
+    ======================= -->
+    <div class="save-btn-container">
       <button type="submit" class="btn btn-primary">Save Changes</button>
     </div>
   </form>
