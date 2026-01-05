@@ -34,7 +34,7 @@ A professional-grade Angular 16 administration portal featuring a modular archit
 
 ## ng version
 
-     _                      _                 ____ _     ___
+```   _                      _                 ____ _     ___
     / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
    / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
   / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
