@@ -24,6 +24,7 @@
         [title]="item.label"
         class="nav-link"
         [class.active]="router.url === item.route"
+        [ngClass]="item.class"
       >
         <span class="material-icons nav-icon">{{ item.icon }}</span>
         <span class="link-text" *ngIf="!isCollapsed">{{ item.label }}</span>
@@ -40,10 +41,6 @@
         class="user-avatar"
         alt="User Avatar"
       />
-      <!-- <div class="user-info">
-        <span class="user-title">{{ user.name }}</span>
-        <span class="user-role">{{ user.role }}</span>
-      </div> -->
       <div class="user-info" *ngIf="user$ | async as user">
         <span class="user-name">{{ user.name }}</span>
         <span class="user-role">{{ user.role }}</span>

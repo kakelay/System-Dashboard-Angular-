@@ -7,6 +7,7 @@ interface NavItem {
   icon: string;
   route: string;
   role?: string;
+  class?: string;
 }
 
 @Component({
@@ -30,7 +31,7 @@ export class SidebarComponent {
     { label: "Reports", icon: "bar_chart", route: "/reports" },
     { label: "Audit Log", icon: "history", route: "/audit-log", role: "ADMIN" },
     { label: "Settings", icon: "settings", route: "/settings" },
-    { label: "Logout", icon: "logout", route: "/auth/login" },
+    { label: "Logout", icon: "logout", route: "/auth/login" , class: "logout-item" },
   ];
 
   constructor(public authService: AuthService, public router: Router) {}

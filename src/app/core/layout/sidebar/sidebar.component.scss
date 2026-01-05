@@ -257,5 +257,34 @@
       color: #64748b;
     }
   }
-  
+}
+/* Default nav item styling */
+.nav-list li {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #1f2937; /* default text color */
+  transition: background 0.2s, color 0.2s;
+
+  i {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Logout item special styling */
+.logout-item {
+  color: #dc2626 !important; /* red text */
+
+  i {
+    color: #dc2626 !important; /* red icon */
+  }
+
+  &:hover {
+    background: rgba(220, 38, 38, 0.1); /* light red hover */
+  }
 }
