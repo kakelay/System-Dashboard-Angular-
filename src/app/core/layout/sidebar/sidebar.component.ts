@@ -20,7 +20,7 @@ export class SidebarComponent {
   @Input() isDarkMode = false;
 
   user$ = this.authService.user$;
-
+  showLogoutModal = false;
 
   navItems: NavItem[] = [
     { label: "Dashboard", icon: "dashboard", route: "/dashboard" },
@@ -31,7 +31,12 @@ export class SidebarComponent {
     { label: "Reports", icon: "bar_chart", route: "/reports" },
     { label: "Audit Log", icon: "history", route: "/audit-log", role: "ADMIN" },
     { label: "Settings", icon: "settings", route: "/settings" },
-    { label: "Logout", icon: "logout", route: "/auth/login" , class: "logout-item" },
+    {
+      label: "Logout",
+      icon: "logout",
+      route: "/auth/login",
+      class: "logout-item",
+    },
   ];
 
   constructor(public authService: AuthService, public router: Router) {}
@@ -41,27 +46,32 @@ export class SidebarComponent {
     return this.authService.getUserRole() === item.role;
   }
 
-  onNavItemClick(item: NavItem) {
-    if (item.label === "Logout" || item.route === "/auth/login") {
-      const confirmed = window.confirm("Are you sure you want to logout?");
-      if (!confirmed) return; // user clicked cancel
-
-      this.authService.logout(); // calls your logout logic
-      // No need to navigate manually since logout() already redirects
-    } else {
-      this.router.navigate([item.route]);
+  onNavItemClick(item: NavItem, event?: Event) {
+    if (event) {
+      event.preventDefault();
     }
+    if (item.label === "Logout" || item.route === "/auth/login") {
+      this.openLogoutModal();
+      return;
+    }
+    this.router.navigate([item.route]);
   }
 
-  onLogout() {
-    const confirmLogout = confirm("Are you sure you want to logout?");
-    if (confirmLogout) this.authService.logout();
+  openLogoutModal(): void {
+    this.showLogoutModal = true;
+  }
+
+  onLogoutConfirm(): void {
+    this.showLogoutModal = false;
+    this.authService.logout();
+  }
+
+  onLogoutCancel(): void {
+    this.showLogoutModal = false;
   }
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-
-    // Add or remove the class on the <body>
     if (this.isDarkMode) {
       document.body.classList.add("dark-mode");
     } else {

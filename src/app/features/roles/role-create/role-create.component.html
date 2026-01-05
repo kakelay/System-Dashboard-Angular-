@@ -1,0 +1,166 @@
+<div class="create-role-container">
+  <!-- Header -->
+  <div class="header-section">
+    <button class="btn-back" (click)="cancel()">← Back to Roles</button>
+    <div>
+      <h1>Create New Role</h1>
+      <p>Define a new role and assign permissions</p>
+    </div>
+  </div>
+
+  <!-- Form Container -->
+  <form [formGroup]="roleForm" (ngSubmit)="createRole()" class="form-container">
+    <!-- Role Information Section -->
+    <div class="card">
+      <h2 class="section-title">Role Information</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Role Name *</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-input"
+            placeholder="e.g., Content Manager, Supervisor"
+          />
+          <span
+            *ngIf="
+              roleForm.get('name')?.invalid && roleForm.get('name')?.touched
+            "
+            class="error-message"
+          >
+            <span *ngIf="roleForm.get('name')?.errors?.['required']">
+              Role name is required
+            </span>
+            <span *ngIf="roleForm.get('name')?.errors?.['minlength']">
+              Role name must be at least 3 characters
+            </span>
+          </span>
+        </div>
+
+        <div class="form-group full-width">
+          <label class="form-label">Description *</label>
+          <textarea
+            formControlName="description"
+            class="form-input textarea"
+            placeholder="Describe the purpose and responsibilities of this role..."
+            rows="4"
+          ></textarea>
+          <span
+            *ngIf="
+              roleForm.get('description')?.invalid &&
+              roleForm.get('description')?.touched
+            "
+            class="error-message"
+          >
+            <span *ngIf="roleForm.get('description')?.errors?.['required']">
+              Description is required
+            </span>
+            <span *ngIf="roleForm.get('description')?.errors?.['minlength']">
+              Description must be at least 10 characters
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Permissions Section -->
+    <div class="card">
+      <h2 class="section-title">Assign Permissions</h2>
+      <p class="section-subtitle">
+        Select the permissions that this role will have access to
+      </p>
+
+      <div class="permissions-container">
+        <!-- View Permissions -->
+        <div class="permission-category">
+          <h3 class="category-title">👁️ View Permissions</h3>
+          <div class="permission-grid">
+            <div
+              *ngFor="let permission of availablePermissions | slice : 0 : 4"
+              class="permission-item"
+              [class.selected]="isPermissionSelected(permission.name)"
+            >
+              <input
+                type="checkbox"
+                [id]="'perm-' + permission.id"
+                [checked]="isPermissionSelected(permission.name)"
+                (change)="togglePermission(permission.name)"
+                class="permission-checkbox"
+              />
+              <label [for]="'perm-' + permission.id" class="permission-label">
+                {{ permission.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manage Permissions -->
+        <div class="permission-category">
+          <h3 class="category-title">⚙️ Management Permissions</h3>
+          <div class="permission-grid">
+            <div
+              *ngFor="let permission of availablePermissions | slice : 4 : 8"
+              class="permission-item"
+              [class.selected]="isPermissionSelected(permission.name)"
+            >
+              <input
+                type="checkbox"
+                [id]="'perm-' + permission.id"
+                [checked]="isPermissionSelected(permission.name)"
+                (change)="togglePermission(permission.name)"
+                class="permission-checkbox"
+              />
+              <label [for]="'perm-' + permission.id" class="permission-label">
+                {{ permission.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <span
+        *ngIf="
+          roleForm.get('permissions')?.invalid &&
+          roleForm.get('permissions')?.touched
+        "
+        class="error-message full-width-error"
+      >
+        Please select at least one permission
+      </span>
+    </div>
+
+    <!-- Permission Summary -->
+    <div class="card info-card">
+      <h3 class="summary-title">Selected Permissions</h3>
+      <div *ngIf="selectedPermissions.length > 0" class="permissions-summary">
+        <span *ngFor="let perm of selectedPermissions" class="permission-tag">
+          {{ perm }}
+          <button
+            type="button"
+            class="remove-tag"
+            (click)="togglePermission(perm)"
+          >
+            ✕
+          </button>
+        </span>
+      </div>
+      <div *ngIf="selectedPermissions.length === 0" class="empty-selection">
+        No permissions selected yet
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline" (click)="cancel()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="roleForm.invalid || selectedPermissions.length === 0"
+      >
+        Create Role
+      </button>
+    </div>
+  </form>
+</div>

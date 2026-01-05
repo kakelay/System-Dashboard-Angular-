@@ -1,43 +1,213 @@
-<div class="flex justify-between items-center mb-4">
-  <div>
-    <h1>User Management</h1>
-    <p>Manage back-office users and their access levels.</p>
+<div class="user-list-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div>
+      <h1>User Management</h1>
+      <p>Manage back-office users and their access levels.</p>
+    </div>
+    <button class="btn btn-primary" (click)="toggleForm()">
+      <span *ngIf="!showForm">➕ Add New User</span>
+      <span *ngIf="showForm">✕ Cancel</span>
+    </button>
   </div>
-  <button class="btn btn-primary" (click)="toggleForm()">
-    {{ showForm ? 'Cancel' : 'Add New User' }}
-  </button>
-</div>
 
-<!-- Add New User Form -->
-<div *ngIf="showForm" class="card mb-4 p-4">
-  <form [formGroup]="userForm" (ngSubmit)="addUser()">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div>
-        <label class="block mb-1 font-medium">Full Name</label>
-        <input type="text" formControlName="name" class="input" placeholder="Enter full name" />
-      </div>
-      <div>
-        <label class="block mb-1 font-medium">Email</label>
-        <input type="email" formControlName="email" class="input" placeholder="Enter email" />
-      </div>
-      <div>
-        <label class="block mb-1 font-medium">Role</label>
-        <select formControlName="role" class="input">
-          <option value="ADMIN">ADMIN</option>
-          <option value="MANAGER">MANAGER</option>
-          <option value="USER">USER</option>
-        </select>
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">👥</div>
+      <div class="stat-content">
+        <span class="stat-value">{{ userStats.totalUsers }}</span>
+        <span class="stat-label">Total Users</span>
       </div>
     </div>
-    <div class="mt-4">
-      <button type="submit" class="btn btn-success" [disabled]="userForm.invalid">
-        Save User
-      </button>
+    <div class="stat-card">
+      <div class="stat-icon green">✓</div>
+      <div class="stat-content">
+        <span class="stat-value">{{ userStats.activeUsers }}</span>
+        <span class="stat-label">Active Users</span>
+      </div>
     </div>
-  </form>
-</div>
+    <div class="stat-card">
+      <div class="stat-icon orange">⭐</div>
+      <div class="stat-content">
+        <span class="stat-value">{{ userStats.admins }}</span>
+        <span class="stat-label">Administrators</span>
+      </div>
+    </div>
+  </div>
 
-<!-- Users Table -->
-<div class="card">
-  <app-data-table [columns]="columns" [data]="users"></app-data-table>
+  <!-- Add New User Form -->
+  <div *ngIf="showForm" class="card form-card mb-4">
+    <h3 class="form-title">Create New User</h3>
+    <form [formGroup]="userForm" (ngSubmit)="addUser()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="input"
+            placeholder="Enter full name"
+          />
+          <span
+            *ngIf="
+              userForm.get('name')?.invalid && userForm.get('name')?.touched
+            "
+            class="error-text"
+            >Name is required</span
+          >
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="input"
+            placeholder="Enter email address"
+          />
+          <span
+            *ngIf="
+              userForm.get('email')?.invalid && userForm.get('email')?.touched
+            "
+            class="error-text"
+            >Valid email is required</span
+          >
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role *</label>
+          <select formControlName="role" class="input">
+            <option value="ADMIN">Administrator</option>
+            <option value="MANAGER">Manager</option>
+            <option value="USER">User</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status *</label>
+          <select formControlName="status" class="input">
+            <option value="ACTIVE">Active</option>
+            <option value="INACTIVE">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="userForm.invalid"
+        >
+          Save User
+        </button>
+        <button type="button" class="btn btn-outline" (click)="toggleForm()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="search-section card mb-4">
+    <div class="search-input-wrapper">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search by name, email, or role..."
+        [(ngModel)]="searchTerm"
+        (input)="searchUsers()"
+      />
+      <span
+        *ngIf="searchTerm"
+        class="clear-icon"
+        (click)="searchTerm = ''; searchUsers()"
+        >✕</span
+      >
+    </div>
+    <p class="search-hint">{{ filteredUsers.length }} user(s) found</p>
+  </div>
+
+  <!-- Users Table -->
+  <div class="card table-card">
+    <div *ngIf="filteredUsers.length > 0" class="table-wrapper">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers" class="user-row">
+            <td>
+              <span class="user-name">{{ user.name }}</span>
+            </td>
+            <td>
+              <span class="user-email">{{ user.email }}</span>
+            </td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'badge-danger': user.role === 'ADMIN',
+                  'badge-warning': user.role === 'MANAGER',
+                  'badge-success': user.role === 'USER'
+                }"
+              >
+                {{ user.role }}
+              </span>
+            </td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'badge-success': user.status === 'ACTIVE',
+                  'badge-secondary': user.status === 'INACTIVE'
+                }"
+              >
+                {{ user.status }}
+              </span>
+            </td>
+            <td>
+              <span class="last-login">{{
+                user.lastLogin | date : "short"
+              }}</span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button
+                  class="btn-icon view-btn"
+                  (click)="viewUserDetail(user.id)"
+                  title="View Details"
+                >
+                  👁️
+                </button>
+                <button
+                  class="btn-icon edit-btn"
+                  (click)="editUser(user)"
+                  title="Edit"
+                >
+                  ✏️
+                </button>
+                <button
+                  class="btn-icon delete-btn"
+                  (click)="deleteUser(user.id)"
+                  title="Delete"
+                >
+                  🗑️
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="filteredUsers.length === 0" class="empty-state">
+      <span class="empty-icon">👤</span>
+      <p class="empty-text">No users found</p>
+      <p class="empty-hint">Try adjusting your search or create a new user</p>
+    </div>
+  </div>
 </div>

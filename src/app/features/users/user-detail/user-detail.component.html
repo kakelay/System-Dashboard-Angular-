@@ -1,0 +1,261 @@
+<div class="user-detail-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <button class="btn-back" (click)="cancel()">← Back to Users</button>
+    <div class="header-content">
+      <div>
+        <h1>{{ userData.name }}</h1>
+        <p class="header-subtitle">{{ userData.email }}</p>
+      </div>
+      <div class="header-badges">
+        <span
+          class="badge"
+          [ngClass]="{
+            'badge-danger': userData.role === 'ADMIN',
+            'badge-warning': userData.role === 'MANAGER',
+            'badge-success': userData.role === 'USER'
+          }"
+        >
+          {{ userData.role }}
+        </span>
+        <span
+          class="badge"
+          [ngClass]="{
+            'badge-success': userData.status === 'ACTIVE',
+            'badge-secondary': userData.status === 'INACTIVE'
+          }"
+        >
+          {{ userData.status }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2 gap-4">
+    <!-- User Information Section -->
+    <div class="card">
+      <div class="card-header">
+        <h2>User Information</h2>
+        <button
+          *ngIf="!isEditMode"
+          class="btn btn-outline btn-sm"
+          (click)="toggleEditMode()"
+        >
+          ✏️ Edit
+        </button>
+      </div>
+
+      <div *ngIf="!isEditMode" class="info-section">
+        <div class="info-item">
+          <span class="info-label">Full Name</span>
+          <span class="info-value">{{ userData.name }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Email</span>
+          <span class="info-value">{{ userData.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Phone</span>
+          <span class="info-value">{{ userData.phone }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Department</span>
+          <span class="info-value">{{ userData.department }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Role</span>
+          <span class="info-value">{{ userData.role }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Status</span>
+          <span class="info-value">{{ userData.status }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Join Date</span>
+          <span class="info-value">{{
+            userData.joinDate | date : "MMM d, y"
+          }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Last Login</span>
+          <span class="info-value">{{
+            userData.lastLogin | date : "short"
+          }}</span>
+        </div>
+      </div>
+
+      <form *ngIf="isEditMode" [formGroup]="userForm" class="edit-form">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-input"
+            placeholder="Enter full name"
+          />
+          <span
+            *ngIf="
+              userForm.get('name')?.invalid && userForm.get('name')?.touched
+            "
+            class="error-text"
+          >
+            Valid name is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-input"
+            placeholder="Enter email address"
+          />
+          <span
+            *ngIf="
+              userForm.get('email')?.invalid && userForm.get('email')?.touched
+            "
+            class="error-text"
+          >
+            Valid email is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone *</label>
+          <input
+            type="tel"
+            formControlName="phone"
+            class="form-input"
+            placeholder="Enter phone number"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Department *</label>
+          <input
+            type="text"
+            formControlName="department"
+            class="form-input"
+            placeholder="Enter department"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Role *</label>
+          <select formControlName="role" class="form-input">
+            <option *ngFor="let role of availableRoles" [value]="role">
+              {{ role }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Status *</label>
+          <select formControlName="status" class="form-input">
+            <option *ngFor="let status of availableStatuses" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-outline"
+            (click)="toggleEditMode()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="saveChanges()"
+            [disabled]="userForm.invalid"
+          >
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div class="card">
+      <h2>Activity Overview</h2>
+      <div class="stats-list">
+        <div class="stat-item">
+          <span class="stat-icon">📅</span>
+          <div>
+            <span class="stat-label">Account Created</span>
+            <span class="stat-value">{{
+              userData.joinDate | date : "MMM d, y"
+            }}</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">🔐</span>
+          <div>
+            <span class="stat-label">Last Login</span>
+            <span class="stat-value">{{
+              userData.lastLogin | date : "short"
+            }}</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">⚡</span>
+          <div>
+            <span class="stat-label">Status</span>
+            <span
+              class="stat-value"
+              [ngClass]="userData.status === 'ACTIVE' ? 'active' : 'inactive'"
+            >
+              {{ userData.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Permissions Section -->
+  <div class="card mt-4">
+    <h2>Permissions</h2>
+    <p class="subtitle">Permissions granted to this user based on their role</p>
+
+    <div class="permissions-grid">
+      <div
+        *ngFor="let permission of userData.permissions"
+        class="permission-item"
+        [class.granted]="permission.granted"
+      >
+        <label class="flex items-center cursor-pointer flex-1">
+          <input
+            type="checkbox"
+            [checked]="permission.granted"
+            (change)="togglePermission(permission)"
+            class="form-checkbox"
+            [disabled]="!isEditMode"
+          />
+          <span class="ml-3">{{ permission.name }}</span>
+        </label>
+        <span *ngIf="permission.granted" class="badge badge-success text-xs">
+          Granted
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Danger Zone -->
+  <div class="card danger-card mt-4">
+    <h2 class="danger-title">Danger Zone</h2>
+    <p class="subtitle">Irreversible actions</p>
+    <button class="btn btn-danger" (click)="deleteUser()">
+      🗑️ Delete User
+    </button>
+  </div>
+
+  <!-- Action Buttons at Bottom -->
+  <div class="flex justify-end gap-3 mt-6">
+    <button class="btn btn-outline" (click)="cancel()">Back to List</button>
+  </div>
+</div>

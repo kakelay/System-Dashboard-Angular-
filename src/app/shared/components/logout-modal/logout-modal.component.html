@@ -1,0 +1,48 @@
+<div class="modal-overlay" (click)="onCancel()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button class="modal-close" (click)="onCancel()">✕</button>
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="modal-icon warning">🚪</div>
+      <h2>Logout Confirmation</h2>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <p class="modal-message">
+        Are you sure you want to logout? You'll be redirected to the login page.
+      </p>
+      <div class="logout-info">
+        <span class="info-icon">ℹ️</span>
+        <span class="info-text">
+          Your session will end and you'll need to login again to access the
+          dashboard.
+        </span>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button
+        class="btn btn-outline"
+        (click)="onCancel()"
+        [disabled]="isLoading"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btn-danger"
+        (click)="onConfirm()"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">Logout</span>
+        <span *ngIf="isLoading" class="loading">
+          <span class="spinner"></span>
+          Logging out...
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

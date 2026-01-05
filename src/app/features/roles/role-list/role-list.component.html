@@ -1,6 +1,6 @@
 <div class="flex justify-between items-center mb-4">
   <h1>Roles & Permissions</h1>
-  <button class="btn btn-primary">Create Role</button>
+  <button class="btn btn-primary" (click)="createRole()">Create Role</button>
 </div>
 <div class="grid-3 mt-3">
   <div class="card" *ngFor="let role of roles">
@@ -9,6 +9,8 @@
       <span class="badge badge-success">{{ role.users }} Users</span>
     </div>
     <p class="text-muted small mb-4">{{ role.description }}</p>
-    <button class="btn btn-outline w-full">Edit Permissions</button>
+    <button class="btn btn-outline w-full" (click)="editRole(role.id)">
+      Edit Permissions
+    </button>
   </div>
 </div>
