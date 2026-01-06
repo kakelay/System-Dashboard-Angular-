@@ -1,18 +1,150 @@
-<h1>System Reports</h1>
-<div class="grid-2 mt-4">
-  <div class="card">
-    <h3>Sales Performance</h3>
-    <div class="chart-placeholder">Sales Chart (Mock)</div>
-    <button class="btn btn-outline mt-4">Download PDF</button>
-  </div>
-  <div class="card">
-    <h3>User Activity</h3>
-    <div class="chart-placeholder">Activity Chart (Mock)</div>
-    <button class="btn btn-outline mt-4">Download PDF</button>
+<!-- Header Section -->
+<div class="header-section">
+  <div class="header-content">
+    <div>
+      <h1 class="page-title">System Reports</h1>
+      <p class="page-subtitle">
+        View comprehensive business analytics and insights
+      </p>
+    </div>
+    <div class="header-actions">
+      <button
+        class="btn btn-secondary"
+        (click)="onRefresh()"
+        title="Refresh reports"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"
+          ></path>
+        </svg>
+        Refresh
+      </button>
+      <button class="btn btn-primary" (click)="onExportAll()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+          ></path>
+        </svg>
+        Export All
+      </button>
+    </div>
   </div>
 </div>
-<div class="card mt-4">
-  <h3>Monthly Revenue</h3>
-  <div class="chart-placeholder">Revenue Chart (Mock)</div>
-  <button class="btn btn-outline mt-4">Download PDF</button>
+
+<!-- Reports Grid -->
+<div class="reports-container">
+  <div class="report-card">
+    <div class="report-header">
+      <div class="report-icon sales-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="12" y1="2" x2="12" y2="22"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      </div>
+      <div class="report-info">
+        <h3>Sales Performance</h3>
+        <p class="report-frequency">Monthly Report</p>
+      </div>
+      <span class="status-badge ready">Ready</span>
+    </div>
+    <div class="report-metric">
+      <span class="metric-label">Total Revenue</span>
+      <span class="metric-value">$847,320</span>
+      <span class="metric-trend up">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 14l5-5 5 5z" transform="rotate(180 12 12)"></path>
+        </svg>
+        +12.5%
+      </span>
+    </div>
+    <div class="chart-placeholder">Sales Chart (Mock)</div>
+    <div class="report-footer">
+      <span class="update-time">Updated: Jan 5, 2026</span>
+      <button class="btn-download" (click)="onDownload('sales')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+          ></path>
+        </svg>
+        Download
+      </button>
+    </div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-header">
+      <div class="report-icon activity-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 17"></polyline>
+          <polyline points="17 6 23 6 23 12"></polyline>
+        </svg>
+      </div>
+      <div class="report-info">
+        <h3>User Activity</h3>
+        <p class="report-frequency">Daily Report</p>
+      </div>
+      <span class="status-badge ready">Ready</span>
+    </div>
+    <div class="report-metric">
+      <span class="metric-label">Active Users</span>
+      <span class="metric-value">4,892</span>
+      <span class="metric-trend up">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 14l5-5 5 5z" transform="rotate(180 12 12)"></path>
+        </svg>
+        +6.1%
+      </span>
+    </div>
+    <div class="chart-placeholder">Activity Chart (Mock)</div>
+    <div class="report-footer">
+      <span class="update-time">Updated: Jan 6, 2026</span>
+      <button class="btn-download" (click)="onDownload('activity')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+          ></path>
+        </svg>
+        Download
+      </button>
+    </div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-header">
+      <div class="report-icon revenue-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M12 2v20m10-10H2"></path>
+          <circle cx="12" cy="12" r="10"></circle>
+        </svg>
+      </div>
+      <div class="report-info">
+        <h3>Monthly Revenue</h3>
+        <p class="report-frequency">Monthly Report</p>
+      </div>
+      <span class="status-badge ready">Ready</span>
+    </div>
+    <div class="report-metric">
+      <span class="metric-label">Net Revenue</span>
+      <span class="metric-value">$2.63M</span>
+      <span class="metric-trend up">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 14l5-5 5 5z" transform="rotate(180 12 12)"></path>
+        </svg>
+        +22.3%
+      </span>
+    </div>
+    <div class="chart-placeholder">Revenue Chart (Mock)</div>
+    <div class="report-footer">
+      <span class="update-time">Updated: Jan 5, 2026</span>
+      <button class="btn-download" (click)="onDownload('revenue')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+          ></path>
+        </svg>
+        Download
+      </button>
+    </div>
+  </div>
 </div>

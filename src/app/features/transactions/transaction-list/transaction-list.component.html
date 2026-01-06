@@ -1,21 +1,112 @@
-<h1>Financial Transactions</h1>
+<!-- Header Section -->
+<div class="header-section">
+  <div class="header-content">
+    <div>
+      <h1 class="page-title">Financial Transactions</h1>
+      <p class="page-subtitle">Manage and track all financial transactions</p>
+    </div>
+    <div class="header-stats">
+      <div class="stat-card">
+        <span class="stat-label">Total Transactions</span>
+        <span class="stat-value">{{ transactions.length }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Successful</span>
+        <span class="stat-value success">{{ getSuccessCount() }}</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="card mt-4">
-  <div class="flex justify-between mb-4">
-    <div class="flex gap-2">
-      <select class="form-select">
-        <option>All Status</option>
-        <option>Success</option>
-        <option>Failed</option>
-      </select>
-      <input type="date" class="form-input" />
+<!-- Content Card -->
+<div class="content-card">
+  <!-- Toolbar Section -->
+  <div class="toolbar-section">
+    <div class="search-filter-group">
+      <div class="search-box">
+        <svg
+          class="search-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search by TX ID or amount..."
+          [(ngModel)]="searchText"
+          (input)="onSearch()"
+        />
+      </div>
+
+      <div class="filter-group">
+        <select
+          class="form-select"
+          [(ngModel)]="selectedStatus"
+          (change)="onFilterChange()"
+        >
+          <option value="">All Status</option>
+          <option value="Success">Success</option>
+          <option value="Pending">Pending</option>
+          <option value="Failed">Failed</option>
+        </select>
+
+        <input
+          type="date"
+          class="form-input"
+          [(ngModel)]="selectedDate"
+          (change)="onFilterChange()"
+        />
+      </div>
     </div>
 
-    <button class="btn btn-outline">Export CSV</button>
+    <div class="action-buttons">
+      <button
+        class="btn btn-secondary"
+        (click)="onRefresh()"
+        title="Refresh data"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"
+          ></path>
+        </svg>
+        Refresh
+      </button>
+      <button class="btn btn-primary" (click)="onExportCSV()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path
+            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+          ></path>
+        </svg>
+        Export CSV
+      </button>
+    </div>
   </div>
 
+  <!-- Results Info -->
+  <div class="results-info" *ngIf="filteredTransactions.length > 0">
+    <span class="results-count"
+      >Showing
+      <strong>{{ filteredTransactions.length }}</strong> transaction(s)</span
+    >
+    <button
+      class="clear-filters-btn"
+      *ngIf="searchText || selectedStatus || selectedDate"
+      (click)="onClearFilters()"
+    >
+      Clear Filters
+    </button>
+  </div>
+
+  <!-- Data Table -->
   <app-data-table
     [columns]="columns"
-    [data]="transactions">
+    [data]="filteredTransactions"
+    [loading]="isLoading"
+  >
   </app-data-table>
 </div>
