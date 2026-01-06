@@ -1,4 +1,59 @@
-<h1>Customer Management</h1>
-<div class="card mt-4">
-  <app-data-table [columns]="columns" [data]="customers"></app-data-table>
+<div class="customer-list">
+  <div class="toolbar">
+    <div class="title-group">
+      <h1>Customer Management</h1>
+      <span class="count">{{ customers.length }} customers</span>
+    </div>
+
+    <div class="actions-group">
+      <input
+        type="search"
+        placeholder="Search customers, company or status..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange($event)"
+        class="search-input"
+      />
+      <button class="btn add-btn">Add Customer</button>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <app-data-table
+      [columns]="columns"
+      [data]="filteredCustomers"
+      (rowClick)="openCustomer($event)"
+      (action)="onAction($event)"
+    ></app-data-table>
+  </div>
+
+  <div class="drawer" [class.open]="selectedCustomer">
+    <div class="drawer-panel" *ngIf="selectedCustomer">
+      <button class="close" (click)="closeCustomer()">×</button>
+      <h2>{{ selectedCustomer.name }}</h2>
+      <p class="meta">
+        {{ selectedCustomer.company }} •
+        <span class="badge" [class]="getStatusBadge(selectedCustomer.status)">{{
+          selectedCustomer.status
+        }}</span>
+      </p>
+
+      <dl class="details">
+        <dt>Email</dt>
+        <dd>{{ selectedCustomer.email }}</dd>
+        <dt>Phone</dt>
+        <dd>{{ selectedCustomer.phone }}</dd>
+        <dt>Address</dt>
+        <dd>{{ selectedCustomer.address }}</dd>
+        <dt>Joined</dt>
+        <dd>{{ selectedCustomer.joined | date : "mediumDate" }}</dd>
+        <dt>Last Order</dt>
+        <dd>{{ selectedCustomer.lastOrder | currency }}</dd>
+      </dl>
+
+      <div class="drawer-actions">
+        <button class="btn">Edit</button>
+        <button class="btn btn-outline" (click)="closeCustomer()">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
