@@ -1,4 +1,21 @@
 <div class="dashboard">
+  <!-- Production Warning Banner -->
+  <div
+    class="alert alert-danger alert-production mb-4"
+    *ngIf="isProduction"
+    role="alert"
+  >
+    <span class="material-icons">warning</span>
+    <div>
+      <p class="font-bold">⚠️ PRODUCTION ENVIRONMENT</p>
+      <p>
+        You are running in PRODUCTION mode. Be extremely careful with any
+        operations performed in this environment. All changes are permanent and
+        affect real users.
+      </p>
+    </div>
+  </div>
+
   <div class="page-header mb-4">
     <h1>System Dashboard</h1>
     <p>Welcome back! Here's an overview of your platform today.</p>
@@ -34,7 +51,11 @@
               <td>{{ tx.id }}</td>
               <td>{{ tx.customer }}</td>
               <td>{{ tx.amount | currency }}</td>
-              <td><span [class]="'badge badge-' + tx.status.toLowerCase()">{{ tx.status }}</span></td>
+              <td>
+                <span [class]="'badge badge-' + tx.status.toLowerCase()">{{
+                  tx.status
+                }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
