@@ -30,7 +30,70 @@ A professional-grade Angular 16 administration portal featuring a modular archit
 
 1.  **Extract the project** to your local directory.
 2.  **Install dependencies**:
-    
+    ```bash
+    npm install
+    ```
+
+## Environment Configuration
+
+The application supports multiple deployment environments with separate configurations:
+
+### Available Environments
+
+- **Development** (`environment.ts`) - Local development with source maps
+- **Staging** (`environment.staging.ts`) - Pre-production testing
+- **Digital** (`environment.digital.ts`) - Digital environment
+- **Production** (`environment.prod.ts`) - Production deployment with optimization
+
+Each environment has its own API base URL configured in `src/environments/`.
+
+### Running the Application
+
+**Development (default):**
+```bash
+npm start
+npm run start:dev
+```
+
+**Staging:**
+```bash
+npm run start:staging
+```
+
+**Digital:**
+```bash
+npm run start:digital
+```
+
+**Production:**
+```bash
+npm run start:prod
+```
+
+### Building for Deployment
+
+**Build for Development:**
+```bash
+npm run build:dev
+```
+
+**Build for Staging:**
+```bash
+npm run build:staging
+```
+
+**Build for Digital:**
+```bash
+npm run build:digital
+```
+
+**Build for Production:**
+```bash
+npm run build:prod
+npm run build
+```
+
+Output files will be in `dist/enterprise-back-office/` directory.
 
 ## ng version
 

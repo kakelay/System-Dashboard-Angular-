@@ -48,7 +48,59 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "staging": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false
+            },
+            "digital": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.digital.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false
             },
             "development": {
               "buildOptimizer": false,
@@ -66,6 +118,12 @@
           "configurations": {
             "production": {
               "browserTarget": "enterprise-back-office:build:production"
+            },
+            "staging": {
+              "browserTarget": "enterprise-back-office:build:staging"
+            },
+            "digital": {
+              "browserTarget": "enterprise-back-office:build:digital"
             },
             "development": {
               "browserTarget": "enterprise-back-office:build:development"
