@@ -7,7 +7,7 @@ out-tsc/
 coverage/
 
 # Environment files (optional, if you want to keep them local)
-src/environments/*.ts
+# src/environments/*.ts
 
 # IDE / Editor files
 .vscode/
