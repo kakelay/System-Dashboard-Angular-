@@ -63,6 +63,37 @@ export class CustomerListComponent implements OnInit {
       },
     });
   }
+  // =========================
+  // PAGINATION
+  // =========================
+  page = 1;
+  pageSize = 5;
+  totalPages = 0;
+
+  get paginatedCustomers() {
+    const start = (this.page - 1) * this.pageSize;
+    return this.filteredCustomers.slice(start, start + this.pageSize);
+  }
+  get totalPageCount() {
+    return Math.ceil(this.filteredCustomers.length / this.pageSize);
+  }
+
+  nextPage() {
+    if (this.page < this.totalPageCount) {
+      this.page++;
+    }
+  }
+
+  prevPage() {
+    if (this.page > 1) {
+      this.page--;
+    }
+  }
+
+  changePageSize(size: number) {
+    this.pageSize = Number(size);
+    this.page = 1; // reset page
+  }
 
   // =========================
   // SEARCH FILTER

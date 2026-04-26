@@ -24,12 +24,37 @@
     </div>
     <app-data-table
       [columns]="columns"
-      [data]="filteredCustomers"
+      [data]="paginatedCustomers"
       (rowClick)="openCustomer($event)"
       (action)="onAction($event)"
     ></app-data-table>
   </div>
+  <!-- pagination -->
+  <div class="pagination">
+    <!-- PAGE SIZE -->
+    <div class="page-size">
+      Show
+      <select (change)="changePageSize($any($event.target).value)">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
+      entries
+    </div>
 
+    <!-- PAGE BUTTONS -->
+    <div class="page-controls">
+      <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+
+      <span> Page {{ page }} of {{ totalPageCount }} </span>
+
+      <button (click)="nextPage()" [disabled]="page === totalPageCount">
+        Next
+      </button>
+    </div>
+  </div>
+  <!-- end of pagination -->
+   
   <!-- DRAWER -->
   <div class="drawer" [class.open]="selectedCustomer">
     <div class="drawer-panel" *ngIf="selectedCustomer">
