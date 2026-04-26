@@ -17,21 +17,9 @@ h1 {
   padding: 1.5rem;
 }
 
-.theme-toggle-btn {
-  color: #f1f5f9;
-  &:hover {
-    background: #475569;
-    color: #60a5fa;
-  }
-}
-
 /* =======================
-   FILTER CONTROLS
+   FORM CONTROLS
 ======================= */
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .form-select,
 .form-input {
   padding: 0.5rem 0.75rem;
@@ -52,53 +40,8 @@ h1 {
 }
 
 /* =======================
-   DARK MODE
+   TOOLBAR
 ======================= */
-:host-context(body.dark-mode) {
-  h1 {
-    color: #f8fafc;
-  }
-
-  .card {
-    background: #23334c;
-    border-color: #1e293b;
-    color: #e5e7eb;
-  }
-
-  .form-select,
-  .form-input {
-    background: #1e293b;
-    border-color: #334155;
-    color: #f1f5f9;
-  }
-
-  .btn-outline {
-    border-color: #334155;
-    color: #e5e7eb;
-  }
-
-  /* =======================
-     DATA TABLE FIX (IMPORTANT)
-  ======================= */
-  ::ng-deep app-data-table {
-    color: #e5e7eb;
-  }
-
-  ::ng-deep app-data-table table {
-    background: transparent;
-  }
-
-  ::ng-deep app-data-table th {
-    color: #94a3b8;
-    border-bottom: 1px solid #334155;
-  }
-
-  ::ng-deep app-data-table td {
-    color: #e5e7eb;
-    border-bottom: 1px solid #334155;
-  }
-}
-
 .customer-list {
   .toolbar {
     display: flex;
@@ -109,10 +52,7 @@ h1 {
     .title-group {
       display: flex;
       flex-direction: column;
-      h1 {
-        margin: 0;
-        font-size: 1.25rem;
-      }
+
       .count {
         font-size: 0.85rem;
         color: #6b7280;
@@ -142,13 +82,11 @@ h1 {
       }
     }
   }
-
-  .card.mt-4 {
-    margin-top: 1rem;
-  }
 }
 
-/* Drawer details */
+/* =======================
+   DRAWER
+======================= */
 .drawer {
   position: fixed;
   right: 0;
@@ -160,7 +98,6 @@ h1 {
   z-index: 90;
   background: rgba(0, 0, 0, 0.35);
   display: flex;
-  align-items: stretch;
   pointer-events: none;
 
   &.open {
@@ -169,78 +106,35 @@ h1 {
   }
 
   .drawer-panel {
-    background: #fff;
+    background: #ffffff;
     width: 360px;
     margin-left: auto;
     padding: 1.25rem;
     height: 100%;
     box-shadow: -8px 0 24px rgba(15, 23, 42, 0.12);
-    pointer-events: auto;
-  }
-
-  .close {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    float: right;
-    cursor: pointer;
   }
 
   .meta {
     color: #64748b;
-    margin-top: 0.25rem;
   }
+
   .details {
     margin-top: 1rem;
+
     dt {
       font-weight: 600;
       color: #475569;
     }
+
     dd {
-      margin: 0 0 0.75rem 0;
+      margin-bottom: 0.75rem;
       color: #1f2937;
     }
   }
-  .drawer-actions {
-    margin-top: 1.25rem;
-    display: flex;
-    gap: 0.5rem;
-  }
 }
 
-/* Stats row */
-.stats {
-  display: flex;
-  gap: 0.75rem;
-  margin: 1rem 0 0.75rem 0;
-
-  .stat-card {
-    background: #ffffff;
-    border: 1px solid #e6edf3;
-    border-radius: 0.5rem;
-    padding: 0.75rem 1rem;
-    min-width: 140px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: #64748b;
-    }
-    .stat-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .stat-sub {
-      font-size: 0.75rem;
-      color: #94a3b8;
-    }
-  }
-}
 /* =======================
-   LOADER (CENTER)
+   LOADER
 ======================= */
 .loader-wrapper {
   display: flex;
@@ -264,6 +158,9 @@ h1 {
   }
 }
 
+/* =======================
+   PAGINATION
+======================= */
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -276,18 +173,97 @@ h1 {
     padding: 4px 8px;
     border-radius: 6px;
     border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #1e293b;
   }
 
   button {
     padding: 6px 12px;
     border-radius: 6px;
     border: 1px solid #e2e8f0;
-    background: white;
+    background: #ffffff;
+    color: #1e293b;
     cursor: pointer;
   }
 
   button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+}
+
+/* =======================
+   DARK MODE
+======================= */
+:host-context(body.dark-mode) {
+  h1 {
+    color: #f8fafc;
+  }
+
+  .card {
+    background: #23334c;
+    border-color: #1e293b;
+    color: #e5e7eb;
+  }
+
+  .form-select,
+  .form-input,
+  .search-input {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+  }
+
+  .btn-outline {
+    border-color: #334155;
+    color: #e5e7eb;
+  }
+
+  /* Drawer Dark */
+  .drawer-panel {
+    background: #1e293b;
+    color: #e5e7eb;
+  }
+
+  .details dt {
+    color: #cbd5f5;
+  }
+
+  .details dd {
+    color: #e5e7eb;
+  }
+
+  /* Pagination Dark */
+  .pagination select {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+  }
+
+  .pagination button {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+  }
+
+  .pagination button:hover {
+    background: #334155;
+  }
+
+  /* Loader Dark */
+  .spinner {
+    border: 4px solid #334155;
+    border-top: 4px solid #60a5fa;
+  }
+
+  /* Data Table Dark Fix */
+  ::ng-deep app-data-table th {
+    color: #94a3b8;
+    border-bottom: 1px solid #334155;
+  }
+
+  ::ng-deep app-data-table td {
+    color: #e5e7eb;
+    border-bottom: 1px solid #334155;
   }
 }

@@ -77,6 +77,9 @@ export class CustomerListComponent implements OnInit {
   get totalPageCount() {
     return Math.ceil(this.filteredCustomers.length / this.pageSize);
   }
+  onSearchChange(_: string) {
+  this.page = 1;
+}
 
   nextPage() {
     if (this.page < this.totalPageCount) {
@@ -89,6 +92,8 @@ export class CustomerListComponent implements OnInit {
       this.page--;
     }
   }
+
+  // end of page change handlers
 
   changePageSize(size: number) {
     this.pageSize = Number(size);
@@ -110,8 +115,6 @@ export class CustomerListComponent implements OnInit {
         c.location?.toLowerCase().includes(term),
     );
   }
-
-  onSearchChange(_: string) {}
 
   // =========================
   // TABLE CONFIG
