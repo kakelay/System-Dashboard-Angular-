@@ -44,7 +44,7 @@
 
     <!-- PAGE BUTTONS -->
     <div class="page-controls">
-      <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+      <button (click)="prevPage()" [disabled]="page === 1">Back</button>
 
       <span> Page {{ page }} of {{ totalPageCount }} </span>
 
@@ -54,7 +54,7 @@
     </div>
   </div>
   <!-- end of pagination -->
-   
+
   <!-- DRAWER -->
   <div class="drawer" [class.open]="selectedCustomer">
     <div class="drawer-panel" *ngIf="selectedCustomer">
