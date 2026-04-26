@@ -19,6 +19,9 @@
 
   <!-- TABLE -->
   <div class="card mt-4">
+    <div *ngIf="loading" class="loader-wrapper">
+      <div class="spinner"></div>
+    </div>
     <app-data-table
       [columns]="columns"
       [data]="filteredCustomers"
@@ -30,36 +33,35 @@
   <!-- DRAWER -->
   <div class="drawer" [class.open]="selectedCustomer">
     <div class="drawer-panel" *ngIf="selectedCustomer">
-      
       <button class="close" (click)="closeCustomer()">×</button>
 
       <!-- HEADER -->
-      <h2>{{ selectedCustomer.name || '-' }}</h2>
+      <h2>{{ selectedCustomer.name || "-" }}</h2>
 
       <p class="meta">
-        {{ selectedCustomer.location || 'No location' }} •
-        <span class="badge">{{ selectedCustomer.status || 'ACTIVE' }}</span>
+        {{ selectedCustomer.location || "No location" }} •
+        <span class="badge">{{ selectedCustomer.status || "ACTIVE" }}</span>
       </p>
 
       <!-- DETAILS -->
       <dl class="details">
         <dt>Email</dt>
-        <dd>{{ selectedCustomer.email || '-' }}</dd>
+        <dd>{{ selectedCustomer.email || "-" }}</dd>
 
         <dt>Phone</dt>
-        <dd>{{ selectedCustomer.contact || selectedCustomer.phone || '-' }}</dd>
+        <dd>{{ selectedCustomer.contact || selectedCustomer.phone || "-" }}</dd>
 
         <dt>Address</dt>
-        <dd>{{ selectedCustomer.address || '-' }}</dd>
+        <dd>{{ selectedCustomer.address || "-" }}</dd>
 
         <dt>City</dt>
-        <dd>{{ selectedCustomer.city || '-' }}</dd>
+        <dd>{{ selectedCustomer.city || "-" }}</dd>
 
         <dt>Country</dt>
-        <dd>{{ selectedCustomer.country || '-' }}</dd>
+        <dd>{{ selectedCustomer.country || "-" }}</dd>
 
         <dt>Zip Code</dt>
-        <dd>{{ selectedCustomer.zipCode || '-' }}</dd>
+        <dd>{{ selectedCustomer.zipCode || "-" }}</dd>
 
         <dt>Website</dt>
         <dd>
@@ -74,17 +76,14 @@
         </dd>
 
         <dt>Bio</dt>
-        <dd>{{ selectedCustomer.bio || '-' }}</dd>
+        <dd>{{ selectedCustomer.bio || "-" }}</dd>
       </dl>
 
       <!-- ACTIONS -->
       <div class="drawer-actions">
         <button class="btn">Edit</button>
-        <button class="btn btn-outline" (click)="closeCustomer()">
-          Close
-        </button>
+        <button class="btn btn-outline" (click)="closeCustomer()">Close</button>
       </div>
-
     </div>
   </div>
 </div>

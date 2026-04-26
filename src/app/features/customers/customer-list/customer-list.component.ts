@@ -12,7 +12,7 @@ export class CustomerListComponent implements OnInit {
   selectedCustomer: any = null;
 
   customers: any[] = [];
-
+  loading: boolean = false; // ✅ HERE
   constructor(private customerService: CustomerService) {}
 
   ngOnInit(): void {
@@ -23,6 +23,8 @@ export class CustomerListComponent implements OnInit {
   // LOAD API DATA
   // =========================
   loadCustomers() {
+    this.loading = true; // ✅ START LOADING
+
     this.customerService.getCustomers().subscribe({
       next: (res: any) => {
         const users = res?.data ?? [];
@@ -30,23 +32,19 @@ export class CustomerListComponent implements OnInit {
         this.customers = users.map((u: any) => ({
           id: u.cid,
 
-          // CORE INFO
           name: u.name ?? "-",
           phone: u.phone ?? "-",
           email: u.email ?? "-",
 
-          // LOCATION INFO
           address: u.address ?? "-",
           city: u.city ?? "-",
           state: u.state ?? "-",
           country: u.country ?? "-",
           zipCode: u.zipCode ?? "-",
 
-          // OPTIONAL INFO
           bio: u.bio ?? "",
           website: u.website ?? "",
 
-          // UI FIELDS
           location:
             u.city || u.country
               ? `${u.city ?? ""}${u.city && u.country ? ", " : ""}${u.country ?? ""}`
@@ -56,10 +54,12 @@ export class CustomerListComponent implements OnInit {
           spent: 0,
         }));
 
-        console.log("MAPPED CUSTOMERS:", this.customers);
+        this.loading = false; // ✅ STOP LOADING
       },
+
       error: (err: any) => {
         console.error("API ERROR:", err);
+        this.loading = false; // ✅ STOP EVEN ERROR
       },
     });
   }
