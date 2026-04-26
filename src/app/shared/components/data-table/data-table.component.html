@@ -6,49 +6,77 @@
   <table>
     <thead>
       <tr>
-        <th *ngFor="let col of columns">{{ col.label }}</th>
+        <th *ngFor="let col of columns">
+          {{ col.label }}
+        </th>
       </tr>
     </thead>
+
     <tbody>
       <tr
         *ngFor="let row of data"
-        (click)="rowClick.emit(row)"
         class="data-row"
+        (click)="rowClick.emit(row)"
       >
         <td *ngFor="let col of columns">
+
           <ng-container [ngSwitch]="col.type">
+
+            <!-- BADGE -->
             <span
               *ngSwitchCase="'badge'"
-              [class]="'badge ' + getBadgeClass(col, row[col.key])"
+              class="badge"
+              [class]="getBadgeClass(col, (row[col.key] || '').toUpperCase())"
             >
-              {{ row[col.key] }}
+              {{ row[col.key] || '-' }}
             </span>
+
+            <!-- CURRENCY -->
             <span *ngSwitchCase="'currency'">
-              {{ row[col.key] | currency }}
+              {{ row[col.key] ?? 0 | currency }}
             </span>
+
+            <!-- DATE -->
             <span *ngSwitchCase="'date'">
-              {{ row[col.key] | date:'dd-MM-yyyy':'Asia/Phnom_Penh' }}
+              {{ row[col.key] ? (row[col.key] | date:'dd-MM-yyyy':'Asia/Phnom_Penh') : '-' }}
             </span>
+
+            <!-- ACTION -->
             <div *ngSwitchCase="'action'" class="actions">
-              <button class="icon-btn" (click)="onAction(row, 'edit', $event)">
+
+              <button
+                class="icon-btn"
+                (click)="onAction(row, 'edit', $event); $event.stopPropagation()"
+              >
                 <span class="material-icons">edit</span>
               </button>
+
               <button
                 class="icon-btn text-danger"
-                (click)="onAction(row, 'delete', $event)"
+                (click)="onAction(row, 'delete', $event); $event.stopPropagation()"
               >
                 <span class="material-icons">delete</span>
               </button>
+
             </div>
-            <span *ngSwitchDefault>{{ row[col.key] }}</span>
+
+            <!-- DEFAULT TEXT -->
+            <span *ngSwitchDefault>
+              {{ row[col.key] ?? '-' }}
+            </span>
+
           </ng-container>
+
         </td>
       </tr>
+
+      <!-- EMPTY STATE -->
       <tr *ngIf="data.length === 0 && !loading">
         <td [attr.colspan]="columns.length" class="empty-cell">
           No data found
         </td>
       </tr>
+
     </tbody>
   </table>
 </div>

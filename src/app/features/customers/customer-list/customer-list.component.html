@@ -8,7 +8,7 @@
     <div class="actions-group">
       <input
         type="search"
-        placeholder="Search customers, company or status..."
+        placeholder="Search customers, email, location..."
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchChange($event)"
         class="search-input"
@@ -17,6 +17,7 @@
     </div>
   </div>
 
+  <!-- TABLE -->
   <div class="card mt-4">
     <app-data-table
       [columns]="columns"
@@ -26,34 +27,64 @@
     ></app-data-table>
   </div>
 
+  <!-- DRAWER -->
   <div class="drawer" [class.open]="selectedCustomer">
     <div class="drawer-panel" *ngIf="selectedCustomer">
+      
       <button class="close" (click)="closeCustomer()">×</button>
-      <h2>{{ selectedCustomer.name }}</h2>
+
+      <!-- HEADER -->
+      <h2>{{ selectedCustomer.name || '-' }}</h2>
+
       <p class="meta">
-        {{ selectedCustomer.company }} •
-        <span class="badge" [class]="getStatusBadge(selectedCustomer.status)">{{
-          selectedCustomer.status
-        }}</span>
+        {{ selectedCustomer.location || 'No location' }} •
+        <span class="badge">{{ selectedCustomer.status || 'ACTIVE' }}</span>
       </p>
 
+      <!-- DETAILS -->
       <dl class="details">
         <dt>Email</dt>
-        <dd>{{ selectedCustomer.email }}</dd>
+        <dd>{{ selectedCustomer.email || '-' }}</dd>
+
         <dt>Phone</dt>
-        <dd>{{ selectedCustomer.phone }}</dd>
+        <dd>{{ selectedCustomer.contact || selectedCustomer.phone || '-' }}</dd>
+
         <dt>Address</dt>
-        <dd>{{ selectedCustomer.address }}</dd>
-        <dt>Joined</dt>
-        <dd>{{ selectedCustomer.joined | date : "mediumDate" }}</dd>
-        <dt>Last Order</dt>
-        <dd>{{ selectedCustomer.lastOrder | currency }}</dd>
+        <dd>{{ selectedCustomer.address || '-' }}</dd>
+
+        <dt>City</dt>
+        <dd>{{ selectedCustomer.city || '-' }}</dd>
+
+        <dt>Country</dt>
+        <dd>{{ selectedCustomer.country || '-' }}</dd>
+
+        <dt>Zip Code</dt>
+        <dd>{{ selectedCustomer.zipCode || '-' }}</dd>
+
+        <dt>Website</dt>
+        <dd>
+          <a
+            *ngIf="selectedCustomer.website"
+            [href]="selectedCustomer.website"
+            target="_blank"
+          >
+            {{ selectedCustomer.website }}
+          </a>
+          <span *ngIf="!selectedCustomer.website">-</span>
+        </dd>
+
+        <dt>Bio</dt>
+        <dd>{{ selectedCustomer.bio || '-' }}</dd>
       </dl>
 
+      <!-- ACTIONS -->
       <div class="drawer-actions">
         <button class="btn">Edit</button>
-        <button class="btn btn-outline" (click)="closeCustomer()">Close</button>
+        <button class="btn btn-outline" (click)="closeCustomer()">
+          Close
+        </button>
       </div>
+
     </div>
   </div>
 </div>
