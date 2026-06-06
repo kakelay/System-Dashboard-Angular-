@@ -13,7 +13,9 @@
         (ngModelChange)="onSearchChange($event)"
         class="search-input"
       />
-      <button class="btn add-btn">Add Customer</button>
+      <button class="btn add-btn" (click)="openAddCustomerModal()">
+        {{ translate("btn.addCustomer") }}
+      </button>
     </div>
   </div>
 
@@ -112,4 +114,11 @@
       </div>
     </div>
   </div>
+
+  <!-- ADD CUSTOMER MODAL -->
+  <app-add-customer-modal
+    *ngIf="showAddCustomerModal"
+    (cancel)="onAddCustomerCancel()"
+    (success)="onAddCustomerSuccess()"
+  ></app-add-customer-modal>
 </div>

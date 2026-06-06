@@ -1,0 +1,256 @@
+<div class="modal-overlay" (click)="onCancelClick()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button class="modal-close" (click)="onCancelClick()">✕</button>
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="modal-icon success">👤</div>
+      <h2>{{ translate("modal.addCustomer") }}</h2>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <!-- Form -->
+      <form [formGroup]="addCustomerForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="username">{{ translate("form.username") }}</label>
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              placeholder="menghour.kak"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('username')">
+              {{ getErrorMessage("username") }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">{{ translate("form.email") }}</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="menghour.kak@example.com"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('email')">
+              {{ getErrorMessage("email") }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">{{ translate("form.firstName") }}</label>
+            <input
+              type="text"
+              id="firstName"
+              formControlName="firstName"
+              placeholder="menghour"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('firstName')">
+              {{ getErrorMessage("firstName") }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">{{ translate("form.lastName") }}</label>
+            <input
+              type="text"
+              id="lastName"
+              formControlName="lastName"
+              placeholder="kak"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('lastName')">
+              {{ getErrorMessage("lastName") }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="password">{{ translate("form.password") }}</label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              placeholder="Password123"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('password')">
+              {{ getErrorMessage("password") }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">{{ translate("form.phone") }}</label>
+            <input
+              type="tel"
+              id="phone"
+              formControlName="phone"
+              placeholder="+85512345678"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('phone')">
+              {{ getErrorMessage("phone") }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="addressLine1">{{ translate("form.addressLine1") }}</label>
+          <input
+            type="text"
+            id="addressLine1"
+            formControlName="addressLine1"
+            placeholder="Street 271"
+            [disabled]="isLoading"
+          />
+          <span class="error" *ngIf="getErrorMessage('addressLine1')">
+            {{ getErrorMessage("addressLine1") }}
+          </span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city">{{ translate("form.city") }}</label>
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              placeholder="Phnom Penh"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('city')">
+              {{ getErrorMessage("city") }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="state">{{ translate("form.state") }}</label>
+            <input
+              type="text"
+              id="state"
+              formControlName="state"
+              placeholder="Phnom Penh"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('state')">
+              {{ getErrorMessage("state") }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="country">{{ translate("form.country") }}</label>
+            <input
+              type="text"
+              id="country"
+              formControlName="country"
+              placeholder="Cambodia"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('country')">
+              {{ getErrorMessage("country") }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="zipCode">{{ translate("form.zipCode") }}</label>
+            <input
+              type="text"
+              id="zipCode"
+              formControlName="zipCode"
+              placeholder="12000"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('zipCode')">
+              {{ getErrorMessage("zipCode") }}
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="bio">{{ translate("form.bio") }}</label>
+          <textarea
+            id="bio"
+            formControlName="bio"
+            placeholder="Software developer working on banking and web applications"
+            rows="3"
+            [disabled]="isLoading"
+          ></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="website">{{ translate("form.website") }}</label>
+          <input
+            type="url"
+            id="website"
+            formControlName="website"
+            placeholder="https://yourwebsite.com"
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="theme">{{ translate("form.theme") }}</label>
+            <select formControlName="theme" [disabled]="isLoading">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="language">{{ translate("form.language") }}</label>
+            <select formControlName="language" [disabled]="isLoading">
+              <option value="en">English</option>
+              <option value="kh">Khmer</option>
+              <option value="cn">中文</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="timezone">{{ translate("form.timezone") }}</label>
+          <input
+            type="text"
+            id="timezone"
+            formControlName="timezone"
+            placeholder="Asia/Phnom_Penh"
+            [disabled]="isLoading"
+          />
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button
+        class="btn btn-outline"
+        (click)="onCancelClick()"
+        [disabled]="isLoading"
+      >
+        {{ translate("btn.cancel") }}
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="onSubmit()"
+        [disabled]="isLoading || addCustomerForm.invalid"
+      >
+        <span *ngIf="!isLoading">{{ translate("btn.submit") }}</span>
+        <span *ngIf="isLoading" class="loading">
+          <span class="spinner"></span>
+          {{ translate("message.loading") }}
+        </span>
+      </button>
+    </div>
+  </div>
+</div>

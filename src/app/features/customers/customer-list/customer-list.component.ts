@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ColumnConfig } from "src/app/shared/components/data-table/data-table.component";
 import { CustomerService } from "src/app/core/services/customer.service";
+import { TranslationService } from "src/app/core/services/translation.service";
 
 @Component({
   selector: "app-customer-list",
@@ -10,13 +11,30 @@ import { CustomerService } from "src/app/core/services/customer.service";
 export class CustomerListComponent implements OnInit {
   searchTerm: string = "";
   selectedCustomer: any = null;
+  showAddCustomerModal: boolean = false;
 
   customers: any[] = [];
   loading: boolean = false; // ✅ HERE
-  constructor(private customerService: CustomerService) {}
+  currentLanguage = "en";
+
+  constructor(
+    private readonly customerService: CustomerService,
+    private readonly translationService: TranslationService,
+  ) {}
 
   ngOnInit(): void {
     this.loadCustomers();
+    this.subscribeToLanguageChanges();
+  }
+
+  private subscribeToLanguageChanges(): void {
+    this.translationService.currentLanguage$.subscribe((lang) => {
+      this.currentLanguage = lang;
+    });
+  }
+
+  translate(key: string): string {
+    return this.translationService.translate(key, this.currentLanguage);
   }
 
   // =========================
@@ -78,8 +96,8 @@ export class CustomerListComponent implements OnInit {
     return Math.ceil(this.filteredCustomers.length / this.pageSize);
   }
   onSearchChange(_: string) {
-  this.page = 1;
-}
+    this.page = 1;
+  }
 
   nextPage() {
     if (this.page < this.totalPageCount) {
@@ -170,5 +188,22 @@ export class CustomerListComponent implements OnInit {
   // =========================
   getStatusBadge(status: string) {
     return status === "ACTIVE" ? "badge-success" : "badge-danger";
+  }
+
+  // =========================
+  // ADD CUSTOMER MODAL
+  // =========================
+  openAddCustomerModal(): void {
+    this.showAddCustomerModal = true;
+  }
+
+  onAddCustomerSuccess(): void {
+    this.showAddCustomerModal = false;
+    // Reload customers list
+    this.loadCustomers();
+  }
+
+  onAddCustomerCancel(): void {
+    this.showAddCustomerModal = false;
   }
 }
