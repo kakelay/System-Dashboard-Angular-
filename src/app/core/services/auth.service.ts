@@ -1,61 +1,129 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { BehaviorSubject, Observable, of, throwError } from "rxjs";
+import { map, tap, catchError } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 export interface User {
   id: string;
   email: string;
-  role: 'ADMIN' | 'USER' | 'MANAGER';
+  role: "ADMIN" | "USER" | "MANAGER";
   name: string;
 }
 
+interface AuthResponse {
+  data?: {
+    accessToken?: string;
+    tokenType?: string;
+  };
+  accessToken?: string;
+  responseCode?: string;
+  status?: string;
+  message?: string;
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<User | null>(this.getUserFromStorage());
+  private readonly tokenStorageKey = "auth_token";
+  private readonly userStorageKey = "auth_user";
+  private userSubject = new BehaviorSubject<User | null>(
+    this.getUserFromStorage(),
+  );
   public user$ = this.userSubject.asObservable();
 
-  constructor(private router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly http: HttpClient,
+  ) {}
 
-  login(email: string, password: string): Observable<User> {
-    // Mock login logic
-    const mockUser: User = {
-      id: '1',
-      email: email,
-      name: 'Admin User',
-      role: email.includes('admin') ? 'ADMIN' : 'USER'
-    };
+  login(username: string, password: string): Observable<string> {
+    return this.authenticate(username, password).pipe(
+      tap(() => {
+        const user: User = {
+          id: "1",
+          email: username,
+          name: username,
+          role: "ADMIN",
+        };
 
-    return of(mockUser).pipe(
-      delay(800),
-      tap(user => {
-        localStorage.setItem('auth_token', 'mock_jwt_token_123');
-        localStorage.setItem('auth_user', JSON.stringify(user));
+        localStorage.setItem(this.userStorageKey, JSON.stringify(user));
         this.userSubject.next(user);
-      })
+      }),
     );
   }
 
+  authenticate(
+    username: string = environment.authUsername,
+    password: string = environment.authPassword,
+  ): Observable<string> {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      apiKey: environment.authApiKey,
+      partnerid: environment.authPartnerId,
+      header: environment.authHeader,
+    });
+
+    const payload = {
+      username,
+      password,
+    };
+
+    return this.http
+      .post<AuthResponse>(environment.authApiUrl, payload, { headers })
+      .pipe(
+        map((response) => {
+          const token = response?.data?.accessToken || response?.accessToken;
+
+          if (!token) {
+            throw new Error(response?.message || "Unable to authenticate");
+          }
+
+          localStorage.setItem(this.tokenStorageKey, token);
+          return token;
+        }),
+        catchError((error) => {
+          this.clearAuthData();
+          return throwError(() => error);
+        }),
+      );
+  }
+
+  getOrRefreshToken(forceRefresh = false): Observable<string> {
+    const token = this.getToken();
+
+    if (token && !forceRefresh) {
+      return of(token);
+    }
+
+    return this.authenticate();
+  }
+
   logout(): void {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth_user');
-    this.userSubject.next(null);
-    this.router.navigate(['/auth/login']);
+    this.clearAuthData();
+    this.router.navigate(["/auth/login"]);
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('auth_token');
+    return !!this.getToken();
   }
 
   getToken(): string | null {
-    return localStorage.getItem('auth_token');
+    return localStorage.getItem(this.tokenStorageKey);
   }
 
   private getUserFromStorage(): User | null {
-    const userStr = localStorage.getItem('auth_user');
+    const userStr = localStorage.getItem(this.userStorageKey);
     return userStr ? JSON.parse(userStr) : null;
+  }
+
+  private clearAuthData(): void {
+    localStorage.removeItem(this.tokenStorageKey);
+    localStorage.removeItem(this.userStorageKey);
+    this.userSubject.next(null);
   }
 
   getUserRole(): string | null {

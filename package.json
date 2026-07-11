@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=development",
-    "start:dev": "ng serve --configuration=development",
+    "start": "ng serve --configuration=development --proxy-config proxy.conf.json",
+    "start:dev": "ng serve --configuration=development --proxy-config proxy.conf.json",
     "start:staging": "ng serve --configuration=staging",
     "start:digital": "ng serve --configuration=digital",
     "start:prod": "ng serve --configuration=production",
