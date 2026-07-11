@@ -126,7 +126,8 @@
               "browserTarget": "enterprise-back-office:build:digital"
             },
             "development": {
-              "browserTarget": "enterprise-back-office:build:development"
+              "browserTarget": "enterprise-back-office:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
