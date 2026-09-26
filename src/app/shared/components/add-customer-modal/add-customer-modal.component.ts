@@ -59,6 +59,8 @@ export class AddCustomerModalComponent implements OnInit, OnDestroy {
       state: ["", [Validators.required]],
       country: ["", [Validators.required]],
       zipCode: ["", [Validators.required]],
+      idNumber: ["", [Validators.required]],
+      idType: ["", [Validators.required]],
       bio: [""],
       website: [""],
       theme: ["light"],

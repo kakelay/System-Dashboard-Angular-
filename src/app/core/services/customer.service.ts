@@ -9,7 +9,7 @@ import { TranslationService } from "./translation.service";
 })
 export class CustomerService {
   private readonly apiBaseUrl = environment.apiBaseUrl;
-  private readonly getCustomersAPI = `${this.apiBaseUrl}/api/user/v2/activeUser`;
+  private readonly getCustomersAPI = `${this.apiBaseUrl}/api/user-profile/incomplete`;
   private readonly createUserAPI = `${this.apiBaseUrl}/api/user/v1/createUser`;
 
   constructor(

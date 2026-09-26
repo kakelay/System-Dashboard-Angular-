@@ -73,6 +73,36 @@
           </div>
         </div>
 
+         <div class="form-row">
+          <div class="form-group">
+            <label for="idType">{{ translate("form.idType") }}</label>
+            <input
+              type="text"
+              id="idType"
+              formControlName="idType"
+              placeholder="National ID"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('idType')">
+              {{ getErrorMessage("idType") }}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="idNumber">{{ translate("form.idNumber") }}</label>
+            <input
+              type="text"
+              id="idNumber"
+              formControlName="idNumber"
+              placeholder="123456789"
+              [disabled]="isLoading"
+            />
+            <span class="error" *ngIf="getErrorMessage('idNumber')">
+              {{ getErrorMessage("idNumber") }}
+            </span>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label for="password">{{ translate("form.password") }}</label>

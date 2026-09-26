@@ -50,11 +50,11 @@ export class CustomerListComponent implements OnInit {
         this.customers = users.map((u: any) => ({
           id: u.cid,
 
-          name: u.name ?? "-",
+          name: u.firstName && u.lastName ? `${u.firstName}.${u.lastName}` : u.firstName ?? u.lastName ?? "N/A",
           phone: u.phone ?? "-",
           email: u.email ?? "-",
 
-          address: u.address ?? "-",
+          address: u.addressLine1 && u.state ? `${u.addressLine1}, ${u.state}` : u.addressLine1 || u.state || "-",
           city: u.city ?? "-",
           state: u.state ?? "-",
           country: u.country ?? "-",
@@ -68,7 +68,7 @@ export class CustomerListComponent implements OnInit {
               ? `${u.city ?? ""}${u.city && u.country ? ", " : ""}${u.country ?? ""}`
               : "N/A",
 
-          status: "ACTIVE",
+          status: u.profileComplete === true ? "ACTIVE" : "INACTIVE",
           spent: 0,
         }));
 
